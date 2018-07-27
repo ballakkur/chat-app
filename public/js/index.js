@@ -4,10 +4,11 @@ socket.on('connect',()=>{
     console.log('connected to server');
 });
 
-socket.on('disconnect',()=>{
-    console.log('disconnected from server');
-});
 
 socket.on('newMessage',(data)=>{
-    console.log(`${data.from} say ${data.text}`);
+    console.log(`${data.from} says ${data.text}`);
+});
+
+socket.on('disconnect',()=>{
+    console.log('disconnected from server');
 });
