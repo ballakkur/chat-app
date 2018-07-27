@@ -1,5 +1,7 @@
 const path = require('path');
 
+const message = require('./utils/message');
+
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -18,24 +20,13 @@ io.on('connection',(socket)=>{
 console.log('user connected');
 
 //wlecome message for new user
-socket.emit('newMessage',{
-    from:'server',
-    text:'welcome to chatapp',
-    createdAt:new Date().getTime()
-})
-socket.broadcast.emit('newMessage',{
-    from:'server',
-    text:'new user joined',
-    createdAt:new Date().getTime()
-});
+socket.emit('newMessage',message.generateMessage('admin','welcome to chatapp'))
+socket.broadcast.emit('newMessage',message.generateMessage('admin','new user joined'));
 
-socket.on('createMessage',(message)=>{
-    console.log(message);
-    io.emit('newMessage',{
-        from:message.from,
-        text:message.text,
-        createdAt:new Date().getTime()
-    });
+socket.on('createMessage',(data,callback)=>{
+    console.log(data);
+    io.emit('newMessage',message.generateMessage(data.from,data.text));
+    callback('this is from the server');
     /* socket.broadcast.emit('newMessage',{
         from:message.from,
         text:message.text,
