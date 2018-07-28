@@ -13,12 +13,12 @@ socket.on('newMessage',(data)=>{
     jQuery('#messages').append(li);
 });
 
-socket.emit('createMessage',{
+/* socket.emit('createMessage',{
     from:'jackie',
     text:'hi'
 },(data)=>{
     console.log('ack arrived at the client',data);
-})
+}) */
 
 socket.on('disconnect',()=>{
     console.log('disconnected from server');
@@ -32,4 +32,16 @@ jQuery('#message-form').on('submit',(e)=>{
         text:jQuery('[name=message]').val()
     },()=>{
     })
-})
+});
+
+/* var locationButton = jQuery('#send-location');
+locationButton.on('click',()=>{
+    if(!navigator.geolocation){
+        return alert('geolocation not supported by your browser');
+    }
+    navigator.geolocation.getCurrentPosition((position)=>{
+        console.log(position);
+    },()=>{
+        alert('unable to fetch location');
+    })
+}) */
